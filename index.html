@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eighteen — Demilade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0a0412;
+      --bg-surface: #12071f;
+      --card-bg: rgba(22, 10, 38, 0.7);
+      --card-hover: rgba(32, 15, 54, 0.85);
+      --border-subtle: rgba(186, 153, 218, 0.15);
+      --border-focus: rgba(212, 175, 55, 0.35);
+      --accent-deep-violet: #6b2d9e;
+      --accent-gold: #cbb279;
+      --accent-lavender: #c2b0d6;
+      --text-primary: #f2edf7;
+      --text-secondary: #9f8fb4;
+      --text-muted: #6e6082;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      width: 88%;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* Typography */
+    .serif {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+
+    .meta-tag {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--accent-gold);
+    }
+
+    /* Hero / Cover */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 1.5rem;
+      position: relative;
+      background: 
+        radial-gradient(circle at 50% 45%, rgba(68, 25, 107, 0.35) 0%, transparent 65%),
+        linear-gradient(180deg, #0d0517 0%, var(--bg-base) 100%);
+    }
+
+    .hero-plinth {
+      position: relative;
+      z-index: 2;
+      max-width: 520px;
+      width: 100%;
+      padding: 4rem 2.5rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      background: rgba(14, 6, 26, 0.65);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-plinth::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 20%;
+      right: 20%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin: 1.5rem 0 0.8rem;
+    }
+
+    .hero h1 em {
+      display: block;
+      font-style: italic;
+      color: var(--accent-lavender);
+      font-size: 0.82em;
+      margin-top: 0.2rem;
+    }
+
+    .hero-divider {
+      width: 32px;
+      height: 1px;
+      background: var(--accent-gold);
+      margin: 1.5rem auto;
+      opacity: 0.6;
+    }
+
+    .hero p {
+      color: var(--accent-lavender);
+      font-size: 0.96rem;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .btn-quiet {
+      display: inline-block;
+      padding: 0.8rem 2.2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      background: transparent;
+      border: 1px solid rgba(203, 178, 121, 0.4);
+      border-radius: 2px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-quiet:hover {
+      background: rgba(203, 178, 121, 0.08);
+      border-color: var(--accent-gold);
+      color: #fff;
+    }
+
+    /* Sections Shared */
+    section {
+      padding: 6rem 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .section-header {
+      margin-bottom: 3.5rem;
+      text-align: center;
+    }
+
+    .section-header h2 {
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-top: 0.6rem;
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      margin-top: 0.4rem;
+    }
+
+    /* Observations Grid */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .profile-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      padding: 2.2rem 1.8rem;
+      border-radius: 2px;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .profile-card:hover {
+      border-color: var(--border-focus);
+      background: var(--card-hover);
+    }
+
+    .profile-card .num {
+      font-size: 0.72rem;
+      color: var(--accent-gold);
+      letter-spacing: 0.15em;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .profile-card h3 {
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 0.8rem;
+    }
+
+    .profile-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* Library Layout */
+    .genre-group {
+      margin-bottom: 4rem;
+    }
+
+    .genre-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 1.8rem;
+    }
+
+    .genre-title h3 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--accent-lavender);
+    }
+
+    .shelf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .book-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 2px;
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .book-item .work-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .book-item .work-author {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.2rem;
+    }
+
+    .book-item .work-annotation {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      font-style: italic;
+      line-height: 1.6;
+      margin-bottom: 1.8rem;
+    }
+
+    .btn-fetch {
+      align-self: flex-start;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(203, 178, 121, 0.4);
+      padding-bottom: 2px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-fetch:hover {
+      border-bottom-color: var(--accent-gold);
+      color: #fff;
+    }
+
+    /* Note Container */
+    .letter-frame {
+      max-width: 680px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 2px;
+      padding: 3.5rem 3rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .letter-frame h3 {
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .letter-frame p {
+      color: var(--text-secondary);
+      font-size: 0.98rem;
+      line-height: 1.85;
+      margin-bottom: 1.4rem;
+    }
+
+    .letter-frame p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Interactive Epilogue */
+    .epilogue-trigger {
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    .btn-epilogue {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 0.9rem 2.4rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-epilogue:hover {
+      border-color: var(--accent-lavender);
+      color: var(--text-primary);
+    }
+
+    .epilogue-reveal {
+      margin-top: 2rem;
+      color: var(--accent-gold);
+      font-size: 1.05rem;
+      font-style: italic;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .epilogue-reveal.open {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 0;
+      text-align: center;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    footer p {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Cover -->
+  <header class="hero">
+    <div class="hero-plinth">
+      <span class="meta-tag">September Dispatch &bull; Vol. XVII</span>
+      
+      <h1 class="serif">To Demilade,<em>On Entering Seventeen</em></h1>
+      
+      <div class="hero-divider"></div>
+      
+      <p class="serif">A private archive curated for your birthday. Dedicated to quiet depths, intellectual instinct, and the narratives you value most.</p>
+      
+      <a href="#catalogue" class="btn-quiet">Open Selected Works</a>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Profile & Character -->
+    <section id="perspective">
+      <div class="section-header">
+        <span class="meta-tag">Character Study</span>
+        <h2 class="serif">The Demilade Disposition</h2>
+        <p>......</p>
+      </div>
+
+      <div class="profile-grid">
+        <div class="profile-card">
+          <span class="num">I. CRITICAL PERCEPTION</span>
+          <h3 class="serif">Subtext Over Spectacle</h3>
+          <p>You rarely take anything at surface value. Whether it is a novel’s unravelling twist or an ordinary conversation, you instinctively look for the motive underneath the statement.</p>
+        </div>
+
+        <div class="profile-card">
+          <span class="num">II. CONVERSATIONAL DEPTH</span>
+          <h3 class="serif">Unforced Resonance</h3>
+          <p>An instinct for moving past small talk without effort. You have a way of anchoring late-night conversations with nuance, dark humor, and opinions you genuinely stand behind.</p>
+        </div>
+
+        <div class="profile-card">
+          <span class="num">III. QUIET INTELLECT</span>
+          <h3 class="serif">Measured Composure</h3>
+          <p>You carry an understated confidence. You know what holds your interest, what wastes your time, and you observe far more than you ever feel the need to say out loud.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curated Library -->
+    <section id="catalogue">
+      <div class="section-header">
+        <span class="meta-tag">The Library</span>
+        <h2 class="serif">Selected Titles</h2>
+        <p>Volumes chosen specifically for your personal reading rotation.</p>
+      </div>
+
+      <!-- Mystery & Psychological Suspense -->
+      <div class="genre-group">
+        <div class="genre-title">
+          <h3 class="serif">Psychological Suspense</h3>
+          <span class="meta-tag">Unreliable Narratives</span>
+        </div>
+        <div class="shelf-grid">
+          <div class="book-item">
+            <div>
+              <div class="work-title serif">The Silent Patient</div>
+              <div class="work-author">Alex Michaelides</div>
+              <div class="work-annotation">"Calculated silence, institutional coldness, and a narrator whose intentions demand constant scrutiny."</div>
+            </div>
+            <a href="books"/TheSilentPatient.pdf" download class="btn-fetch">Retrieve Volume &rarr;</a>
+          </div>
+
+          <div class="book-item">
+            <div>
+              <div class="work-title serif">Rock Paper Scissors</div>
+              <div class="work-author">Alice Feeney</div>
+              <div class="work-annotation">"An isolated retreat, ten years of concealed resentments, and a premise built entirely on who is deceiving whom."</div>
+            </div>
+            <a href="books/rock-paper-scissors.epub" download class="btn-fetch">Retrieve Volume &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dark Romance -->
+      <div class="genre-group">
+        <div class="genre-title">
+          <h3 class="serif">Dark Romance</h3>
+          <span class="meta-tag">High Stakes & Tension</span>
+        </div>
+        <div class="shelf-grid">
+          <div class="book-item">
+            <div>
+              <div class="work-title serif">Corrupt</div>
+              <div class="work-author">Penelope Douglas</div>
+              <div class="work-annotation">"A deliberate study in psychological control, blurred allegiances, and tension that doesn't relent."</div>
+            </div>
+            <a href="books/corrupt.epub" download class="btn-fetch">Retrieve Volume &rarr;</a>
+          </div>
+
+          <div class="book-item">
+            <div>
+              <div class="work-title serif">Hooked</div>
+              <div class="work-author">Emily McIntire</div>
+              <div class="work-annotation">"Vengeance prioritized above restraint, where affection is an unintended, volatile complication."</div>
+            </div>
+            <a href="books/hooked.epub" download class="btn-fetch">Retrieve Volume &rarr;</a>
+          </div>
+
+          <div class="book-item">
+            <div>
+              <div class="work-title serif">Does It Hurt?</div>
+              <div class="work-author">H.D. Carlton</div>
+              <div class="work-annotation">"Gothic isolation, hostility turned survival, and the sharp dynamic you expect from Carlton's pen."</div>
+            </div>
+            <a href="books/does-it-hurt.epub" download class="btn-fetch">Retrieve Volume &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modern & Slow-Burn -->
+      <div class="genre-group">
+        <div class="genre-title">
+          <h3 class="serif">Modern & Deliberate Romance</h3>
+          <span class="meta-tag">Prolonged Payoff</span>
+        </div>
+        <div class="shelf-grid">
+          <div class="book-item">
+            <div>
+              <div class="work-title serif">Book Lovers</div>
+              <div class="work-author">Emily Henry</div>
+              <div class="work-annotation">"Sharp professional rivalry and guarded vulnerability between two people who know the tropes too well to fall for them blindly."</div>
+            </div>
+            <a href="books/book-lovers.epub" download class="btn-fetch">Retrieve Volume &rarr;</a>
+          </div>
+
+          <div class="book-item">
+            <div>
+              <div class="work-title serif">The Spanish Love Deception</div>
+              <div class="work-author">Elena Armas</div>
+              <div class="work-annotation">"A controlled, icy exterior slowly dismantled by proximity and understated devotion."</div>
+            </div>
+            <a href="books/the-spanish-love-deception.epub" download class="btn-fetch">Retrieve Volume &rarr;</a>
+          </div>
+
+          <div class="book-item">
+            <div>
+              <div class="work-title serif">From Lukov with Love</div>
+              <div class="work-author">Mariana Zapata</div>
+              <div class="work-annotation">"The benchmark of patience. Unyielding friction and mutual respect that demands every bit of its slow burn."</div>
+            </div>
+            <a href="books/from-lukov-with-love.epub" download class="btn-fetch">Retrieve Volume &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introspective Fiction -->
+      <div class="genre-group">
+        <div class="genre-title">
+          <h3 class="serif">Introspective Fiction</h3>
+          <span class="meta-tag">Formative Dynamics</span>
+        </div>
+        <div class="shelf-grid">
+          <div class="book-item">
+            <div>
+              <div class="work-title serif">Normal People</div>
+              <div class="work-author">Sally Rooney</div>
+              <div class="work-annotation">"A stripped-back study of intellectual intimacy, unspoken class divides, and the quiet weight of truly understanding someone."</div>
+            </div>
+            <a href="books/normal-people.epub" download class="btn-fetch">Retrieve Volume &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Birthday Address -->
+    <section id="dispatch">
+      <div class="letter-frame">
+        <span class="meta-tag" style="display: block; text-align: center; margin-bottom: 1.2rem;">Birthday Note</span>
+        <h3 class="serif">Eighteen, Demilade</h3>
+        <p>Turning Seventeen marks a shift in scale. It isn't just about having another year behind you; it is about stepping into your own agency and refining the person you already know yourself to be.</p>
+        <p>Over two years of long-distance conversations, late-night analyses, and shared perspectives, your intellect, dry composure, and distinct way of seeing things have been entirely unmistakable. You don’t need loud declarations or performative gestures to command presence—your mind does that on its own.</p>
+        <p>Rather than a conventional gift, I wanted to curate something deliberate: stories that respect your time, challenge your instincts, and match your tastes.</p>
+        <p>May Seventeen bring you autonomy, clarity of purpose, peace in your pursuits, and narratives that are impossible to put down. Happy Birthday, Demilade.</p>
+      </div>
+
+      <div class="epilogue-trigger">
+        <button class="btn-epilogue" onclick="revealEpilogue()">Mark The Occasion</button>
+        <div id="epilogueText" class="epilogue-reveal serif">"To every plot twist, quiet revelation, and new chapter ahead."</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Curated For Demilade &bull; Seventeen Years</p>
+    </div>
+  </footer>
+
+  <script>
+    function revealEpilogue() {
+      const el = document.getElementById('epilogueText');
+      el.classList.add('open');
+    }
+  </script>
+</body>
+</html>
